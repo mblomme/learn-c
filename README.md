@@ -1,2 +1,2 @@
 # learn-c
-Yes learn c and learn it well
+Yes learn c and learn it well!
