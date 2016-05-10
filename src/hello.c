@@ -1,13 +1,17 @@
 /*
- * hello.c
- *
- *  Created on: May 4, 2016
- *      Author: matthiasblomme
+ ============================================================================
+ Name        : test.c
+ Author      :
+ Version     :
+ Copyright   : Your copyright notice
+ Description : Hello World in C, Ansi-style
+ ============================================================================
  */
+
 #include <stdio.h>
+#include <stdlib.h>
 
-int main() {
-   printf("Hello, world!\n");
-   return 0;
+int main(void) {
+	puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
+	return EXIT_SUCCESS;
 }
-
