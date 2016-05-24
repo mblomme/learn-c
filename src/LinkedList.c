@@ -9,13 +9,12 @@ typedef struct _node {
 
 void freeNode (Node *);
 
-void display(LinkedList * list, void (displayData) (const void *));
+void display(LinkedList * list, void (*displayData) (const void *));
 
-void displayNode (Node *, void (displayData) (const void *));
+void displayNode (Node *, void (*displayData) (const void *));
 
 void freeList(LinkedList * list);
 
-void initList(LinkedList * list);
 
 LinkedList * new_LinkedList() ;
 
@@ -31,6 +30,8 @@ void freeList(LinkedList * list) {
 	freeNode(list->head);
 
 	free(list->head);
+
+	list->head = NULL;
 }
 
 void freeNode (Node * n) {
@@ -48,14 +49,14 @@ void freeNode (Node * n) {
 	n->next = NULL;
 }
 
-void display(LinkedList * list, void (displayData) (const void *)) {
+void display(LinkedList * list, void (*displayData) (const void *)) {
 	if (list == NULL || list->head == NULL)
 		return;
 
 	displayNode(list->head, displayData);
 }
 
-void displayNode(Node * node, void (displayData) (const void *)) {
+void displayNode(Node * node, void (*displayData) (const void *)) {
 	if (node == NULL)
 			return;
 
@@ -78,9 +79,9 @@ LinkedList * new_LinkedList() {
 }
 
 void populateList(LinkedList * list) {
-	list->head = newNode(0);
+	list->head = newNode(3);
 	Node * mover = list->head;
-	for (int i = 1; i < 10; i++) {
+	for (int i = 4; i < 20; i++) {
 		mover->next = newNode(i);
 		mover = mover->next;
 	}

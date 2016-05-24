@@ -2,3 +2,8 @@
 /Debug/*
 /Release/*
 /.cproject
+/Debug/
+/Release/
+/MijnBuild/
+/.settings/
+/build/
