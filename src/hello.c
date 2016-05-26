@@ -10,13 +10,21 @@ void displayData (const void * data) {
 
 int main() {
 
-	LinkedList * list = new_LinkedList();
+	LinkedList list = new_LinkedList();
+
+	for (int i=25;i>=0; i--) {
+		int * d = malloc(sizeof(int));
+		*d = i;
+		list->push(list, d);
+	}
 
 	list->display(list, displayData);
 
-	list->freeList(list);
+	list->clear(list);
 
 	list->display(list, displayData);
+
+	free(list);
 
 	return 0;
 }
