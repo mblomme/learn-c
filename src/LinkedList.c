@@ -53,17 +53,6 @@ void displayNode(Node * node, void (*displayData) (const void *)) {
 	displayNode(node->next, displayData);
 }
 
-void push(LinkedList list, void * data) {
-	Node * node = newNode(data);
-
-	Node * head = (Node *) getHead(list);
-
-	node->next = head;
-
-	setHead(list, node);
-	incrementSizeCount(list);
-}
-
 void add(LinkedList list, void * data) {
 
 	Node * head = (Node *) getHead(list);
@@ -140,12 +129,11 @@ void setHead(LinkedList list, Node * node) {
 	incrementSizeCount(list);
 }
 
-LinkedList new_LinkedList() {
+LinkedList newLinkedList() {
 	LinkedList l = (LinkedList) malloc(sizeof(struct _linkedList));
 	l->internals = newInternals();
 	l->clear = freeList;
 	l->display = display;
-	l->push = push;
 	l->add = add;
 	l->addAt = addAt;
 	l->getSize = getSize;

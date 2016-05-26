@@ -5,7 +5,6 @@
 
 		void (*display) (struct _linkedList *, void (*displayData) (const void *));
 		void (*clear) (struct _linkedList *);
-		void (*push) (struct _linkedList *, void *);
 		void (*add) (struct _linkedList *, void *);
 		void (*addAt) (struct _linkedList *, void *, int);
 		int (*getSize)(struct _linkedList *);
@@ -13,11 +12,9 @@
 
 	typedef struct _linkedList * LinkedList;
 
-	LinkedList new_LinkedList();
+	LinkedList newLinkedList();
 
 	void initList(LinkedList);
-
-	void push (LinkedList, void *);
 
 	void add (LinkedList, void *);
 	
