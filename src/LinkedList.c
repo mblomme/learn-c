@@ -59,45 +59,94 @@ void add(LinkedList list, void * data) {
 
 	if (head == NULL) {
 		setHead(list,newNode(data));
-		return;
+
+	} else {
+		Node * node = newNode(data);
+		Node * mover = (Node *) getHead(list);
+		while (mover->next != NULL)
+			mover = mover->next;
+		mover->next = node;
 	}
 
-	Node * node = newNode(data);
-	Node * mover = (Node *) getHead(list);
-	while (mover->next != NULL)
-		mover = mover->next;
-
-	mover->next = node;
 	incrementSizeCount(list);
 }
 
 void addAt(LinkedList list, void * data, int n) {
-	if (n >= getSize(list))
+	if (n > getSize(list))
 		return;
 
 	if (getSize(list)== 0) {
 		add(list, data);
+		return;
 	}
 
 	Node * node = newNode(data);
 	Node * mover = (Node *) getHead(list);
-	int index = 0;
-	while (mover->next != NULL) {
-		if (index == (n-1))
-			break;
-		mover = mover->next;
-		index++;
-	}
 
-	if (index != (n-1)) {
-		//EXCEPTION THROWING!!!
-	}
+	if (n == 0) {
+		node->next = mover;
+		setHead(list, node);
 
-	Node * tail = mover->next;
-	mover->next = node;
-	node->next = tail;
+	} else {
+
+		int index = 0;
+		while (mover->next != NULL) {
+			if (index == (n-1))
+				break;
+			mover = mover->next;
+			index++;
+		}
+
+		if (index != (n-1)) {
+			//EXCEPTION THROWING!!!
+		}
+
+		Node * tail = mover->next;
+		mover->next = node;
+		node->next = tail;
+	}
 
 	incrementSizeCount(list);
+}
+
+void * deleteItem (LinkedList list, int index) {
+	if (list == NULL || list->getSize == 0)
+		return NULL;
+
+	Node * mover = getHead(list);
+	void * data = NULL;
+
+	if (index == 0) {
+
+		setHead(list, mover->next);
+
+		data = clearNode(mover);
+
+	} else {
+		int i = 0;
+		while (i < (index -1)) {
+			i++;
+			mover =  mover->next;
+		}
+
+		Node * deletableNode = mover->next;
+
+		mover->next = deletableNode->next;
+
+		data = clearNode(mover->next);
+	}
+
+	decrementSizeCount(list);
+	return data;
+}
+
+void * clearNode(Node * node) {
+	void * data = node->data;
+	node->data = NULL;
+	node->next = NULL;
+	free(node);
+
+	return data;
 }
 
 int getSize(LinkedList list) {
@@ -126,7 +175,6 @@ void setHead(LinkedList list, Node * node) {
 
 	Internals * i = list->internals;
 	i->head = node;
-	incrementSizeCount(list);
 }
 
 LinkedList newLinkedList() {
@@ -137,6 +185,7 @@ LinkedList newLinkedList() {
 	l->add = add;
 	l->addAt = addAt;
 	l->getSize = getSize;
+	l->deleteItem = deleteItem;
 
 	return l;
 }
@@ -169,5 +218,12 @@ int decrementSizeCount(LinkedList list) {
 void setSize(LinkedList list, int size) {
 	Internals * i = list->internals;
 	i->size = size;
+}
+
+void deleteLinkedList(LinkedList list) {
+	freeList(list);
+	free(list->internals);
+	list->internals = NULL;
+	free(list);
 }
 

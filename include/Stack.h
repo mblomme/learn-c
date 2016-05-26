@@ -7,8 +7,6 @@
 
 #ifndef INCLUDE_STACK_H_
 #define INCLUDE_STACK_H_
-	#include "LinkedList.h"
-	#define GET_LIST(X) (LinkedList) X
 
 	struct _stack {
 		void * internals;
@@ -33,5 +31,7 @@
 	void displayStack (Stack, void (*displayData)(const void *));
 
 	int count(Stack);
+
+	void deleteStack(Stack);
 
 #endif /* INCLUDE_STACK_H_ */

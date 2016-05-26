@@ -30,4 +30,6 @@
 
 	void setSize(LinkedList, int);
 
+	void * clearNode(Node *);
+
 #endif

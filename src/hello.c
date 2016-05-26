@@ -11,21 +11,56 @@ void displayData (const void * data) {
 
 int main() {
 
-	LinkedList list = newLinkedList();
+//	LinkedList list = newLinkedList();
+//
+//	for (int i=0;i<=25; i++) {
+//		int * d = malloc(sizeof(int));
+//		*d = i;
+//		list->add(list, d);
+//	}
+//
+//	list->display(list, displayData);
+//
+//	list->clear(list);
+//
+//	list->display(list, displayData);
+//
+//	free(list->internals);
+//
+//	free(list);
 
-	for (int i=25;i>=0; i--) {
-		int * d = malloc(sizeof(int));
-		*d = i;
-		list->add(list, d);
+
+
+	// Stack and linkedlist should be passed a deleteDataType function through the constructor
+
+	// Make a type T = void *
+
+	// What about namespaces in c?
+
+
+	Stack s = newStack();
+
+	printf("aantal: %d\n", s->count(s));
+
+	for (int i=0;i<= 25; i++) {
+			int * d = malloc(sizeof(int));
+			*d = i;
+			s->push(s, d);
 	}
 
-	list->display(list, displayData);
+	s->displayStack(s, displayData);
+	printf("aantal: %d\n", s->count(s));
 
-	list->clear(list);
+//	for (int i=0;i<= 25; i++) {
+//		void * data = s->pop(s);
+//		free(data);
+//		data = NULL;
+//		printf("aantal: %d\n", s->count(s));
+//	}
 
-	list->display(list, displayData);
+	deleteStack(s);
 
-	free(list);
+
 
 	return 0;
 }

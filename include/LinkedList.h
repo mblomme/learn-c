@@ -8,11 +8,14 @@
 		void (*add) (struct _linkedList *, void *);
 		void (*addAt) (struct _linkedList *, void *, int);
 		int (*getSize)(struct _linkedList *);
+		void * (*deleteItem) (struct _linkedList *, int);
 	};
 
 	typedef struct _linkedList * LinkedList;
 
 	LinkedList newLinkedList();
+
+	void deleteLinkedList(LinkedList);
 
 	void initList(LinkedList);
 
@@ -24,6 +27,8 @@
 
 	void freeList(LinkedList);
 
-	void addAt(struct _linkedList *, void *, int);
+	void addAt(LinkedList, void *, int);
+
+	void * deleteItem (LinkedList, int);
 
 #endif
