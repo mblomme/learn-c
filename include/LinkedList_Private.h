@@ -5,10 +5,12 @@
 	typedef struct _internals {
 		struct _node  * head;
 		int size;
+		void (*deleteData) (T data);
+		void (*displayData) (const T);
 	} Internals;
 
 	typedef struct _node {
-		void * data;
+		T data;
 		struct _node  * next;
 	} Node;
 
@@ -16,13 +18,13 @@
 
 	void setHead(LinkedList, Node *);
 
-	Internals * newInternals();
+	Internals * newInternals(void (*deleteData) (T data), void (*displayData) (const T));
 
-	void freeNode (Node *);
+	void freeNode (Node *, void (*deleteNodeData)(T));
 
-	void displayNode (Node *, void (*displayData) (const void *));
+	void displayNode (Node *, void (*displayData) (const T));
 
-	Node * newNode(void *);
+	Node * newNode(T);
 
 	int incrementSizeCount(LinkedList);
 
@@ -30,6 +32,6 @@
 
 	void setSize(LinkedList, int);
 
-	void * clearNode(Node *);
+	T clearNode(Node *);
 
 #endif

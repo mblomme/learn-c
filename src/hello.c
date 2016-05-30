@@ -3,64 +3,74 @@
 #include <stdlib.h>
 #include "../include/LinkedList.h"
 #include "../include/Stack.h"
+#include <string.h>
 
-void displayData (const void * data) {
+#define BUFFER 50
+
+typedef struct _person {
+	char * firstName;
+	char * lastName;
+} Person;
+
+
+void displayPerson (const T data) {
+	const Person * n = (const Person *) data;
+	printf("Naam: %s\t Voornaam:%s\n",  n->firstName, n->lastName);
+}
+
+void deletePerson (const T data) {
+	Person * n = (Person *) data;
+	free(n->firstName);
+	free(n->lastName);
+	n->firstName = NULL;
+	n->lastName = NULL;
+}
+
+void displayData (const T data) {
 	const int * n = (const int *) data;
 	printf("Value at p1: %d\n", *n);
 }
 
+void deleteData (T data) {
+	int * n = (int *) data;
+	*n = 0;
+}
+
+Person * newPerson(char * firstName, char * lastName) {
+	Person * p = malloc(sizeof(Person));
+
+	char * fn = malloc(sizeof(char) * BUFFER);
+	char * ln = malloc(sizeof(char) * BUFFER);
+
+	strcpy(fn, firstName);
+	strcpy(ln, lastName);
+
+	p->firstName = fn;
+	p->lastName = ln;
+
+	return p;
+}
+
 int main() {
 
-//	LinkedList list = newLinkedList();
-//
-//	for (int i=0;i<=25; i++) {
-//		int * d = malloc(sizeof(int));
-//		*d = i;
-//		list->add(list, d);
-//	}
-//
-//	list->display(list, displayData);
-//
-//	list->clear(list);
-//
-//	list->display(list, displayData);
-//
-//	free(list->internals);
-//
-//	free(list);
+	Person * p1 = newPerson("Matthias", "Blomme");
 
+	Person * p2 = newPerson("Hannelore", "Verhamme");
 
+	Person * p3 = newPerson("Reinout", "Verhamme");
 
-	// Stack and linkedlist should be passed a deleteDataType function through the constructor
+	Stack s = newStack(deletePerson, displayPerson);
 
-	// Make a type T = void *
+	printf("aantal: %d\n", s->getSize(s));
 
-	// What about namespaces in c?
+	s->push(s, p1);
+	s->push(s, p2);
+	s->push(s, p3);
 
-
-	Stack s = newStack();
-
-	printf("aantal: %d\n", s->count(s));
-
-	for (int i=0;i<= 25; i++) {
-			int * d = malloc(sizeof(int));
-			*d = i;
-			s->push(s, d);
-	}
-
-	s->displayStack(s, displayData);
-	printf("aantal: %d\n", s->count(s));
-
-//	for (int i=0;i<= 25; i++) {
-//		void * data = s->pop(s);
-//		free(data);
-//		data = NULL;
-//		printf("aantal: %d\n", s->count(s));
-//	}
+	s->display(s);
+	printf("aantal: %d\n", s->getSize(s));
 
 	deleteStack(s);
-
-
 
 	return 0;
 }

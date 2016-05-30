@@ -8,27 +8,29 @@
 #ifndef INCLUDE_STACK_H_
 #define INCLUDE_STACK_H_
 
+	typedef void * T;
+
 	struct _stack {
 		void * internals;
 
-		void (*push)(struct _stack *, void *);
+		void (*push)(struct _stack *, T);
 
-		void * (*pop)(struct _stack *);
+		T (*pop)(struct _stack *);
 
-		void (*displayStack)(struct _stack *, void (*displayData) (const void *));
+		void (*display)(struct _stack *);
 
-		int (*count)(struct _stack *);
+		int (*getSize)(struct _stack *);
 	};
 
 	typedef struct _stack * Stack;
 
-	Stack newStack();
+	Stack newStack(void (*deleteData) (T), void (*displayData) (const T));
 
-	void push(Stack, void *);
+	void push(Stack, T);
 
-	void * pop(Stack);
+	T pop(Stack);
 
-	void displayStack (Stack, void (*displayData)(const void *));
+	void displayStack (Stack);
 
 	int count(Stack);
 

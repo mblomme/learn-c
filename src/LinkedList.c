@@ -9,7 +9,11 @@ void freeList(LinkedList list) {
 	if (head == NULL)
 		return;
 
-	freeNode(head);
+	Internals * i = list->internals;
+
+	void (*deleteNodeData)(T data) = i->deleteData;
+
+	freeNode(head, deleteNodeData);
 
 	free(head);
 
@@ -18,13 +22,15 @@ void freeList(LinkedList list) {
 	setSize(list, 0);
 }
 
-void freeNode (Node * n) {
+void freeNode (Node * n, void (*deleteNodeData)(T data)) {
 	if (n == NULL)
 		return;
 
 	if (n->next != NULL) {
-		freeNode(n->next);
+		freeNode(n->next, deleteNodeData);
 	}
+
+	deleteNodeData(n->data);
 
 	free(n->data);
 	n->data = NULL;
@@ -33,27 +39,31 @@ void freeNode (Node * n) {
 	n->next = NULL;
 }
 
-void display(LinkedList list, void (*displayData) (const void *)) {
+void display(LinkedList list) {
 	if (list == NULL)
 		return;
 
 	Node * head = (Node *) getHead(list);
 
-	displayNode(head, displayData);
+	Internals * i = list->internals;
+
+	void (*dislayNodeData)(T data) = i->displayData;
+
+	displayNode(head, dislayNodeData);
 }
 
-void displayNode(Node * node, void (*displayData) (const void *)) {
+void displayNode(Node * node, void (*dislayNodeData)(T data)) {
 	if (node == NULL)
 			return;
 
 	int * intData = (int *) node->data;
 	if (intData != NULL)
-		displayData(intData);
+		dislayNodeData(intData);
 
-	displayNode(node->next, displayData);
+	displayNode(node->next, dislayNodeData);
 }
 
-void add(LinkedList list, void * data) {
+void add(LinkedList list, T data) {
 
 	Node * head = (Node *) getHead(list);
 
@@ -71,7 +81,7 @@ void add(LinkedList list, void * data) {
 	incrementSizeCount(list);
 }
 
-void addAt(LinkedList list, void * data, int n) {
+void addAt(LinkedList list, T data, int n) {
 	if (n > getSize(list))
 		return;
 
@@ -109,12 +119,12 @@ void addAt(LinkedList list, void * data, int n) {
 	incrementSizeCount(list);
 }
 
-void * deleteItem (LinkedList list, int index) {
+T deleteItem (LinkedList list, int index) {
 	if (list == NULL || list->getSize == 0)
 		return NULL;
 
 	Node * mover = getHead(list);
-	void * data = NULL;
+	T data = NULL;
 
 	if (index == 0) {
 
@@ -140,8 +150,8 @@ void * deleteItem (LinkedList list, int index) {
 	return data;
 }
 
-void * clearNode(Node * node) {
-	void * data = node->data;
+T clearNode(Node * node) {
+	T data = node->data;
 	node->data = NULL;
 	node->next = NULL;
 	free(node);
@@ -169,17 +179,13 @@ Node * getHead(LinkedList list) {
 }
 
 void setHead(LinkedList list, Node * node) {
-	if (list->internals == NULL) {
-		list->internals = newInternals();
-	}
-
 	Internals * i = list->internals;
 	i->head = node;
 }
 
-LinkedList newLinkedList() {
+LinkedList newLinkedList(void (*deleteData) (T data), void (*displayData) (const T) ) {
 	LinkedList l = (LinkedList) malloc(sizeof(struct _linkedList));
-	l->internals = newInternals();
+	l->internals = newInternals(deleteData, displayData);
 	l->clear = freeList;
 	l->display = display;
 	l->add = add;
@@ -190,7 +196,7 @@ LinkedList newLinkedList() {
 	return l;
 }
 
-Node * newNode(void * data) {
+Node * newNode(T data) {
 	Node * node = (Node *) malloc(sizeof(Node));
 	node->data = data;
 	node->next = NULL;
@@ -198,10 +204,12 @@ Node * newNode(void * data) {
 	return node;
 }
 
-Internals * newInternals() {
+Internals * newInternals(void (*deleteData) (T data), void (*displayData) (const T)) {
 	Internals * i = malloc(sizeof(Internals));
 	i->size = 0;
 	i->head = NULL;
+	i->deleteData = deleteData;
+	i->displayData = displayData;
 	return i;
 }
 

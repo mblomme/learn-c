@@ -12,14 +12,14 @@
 
 #define GET_LIST(X) (LinkedList) X->internals
 
-Stack newStack() {
+Stack newStack(void (*deleteData) (T), void (*displayData) (const T)) {
 	Stack stack = malloc(sizeof(struct _stack));
 
-	stack->internals = newLinkedList();
+	stack->internals = newLinkedList(deleteData, displayData);
 	stack->push = push;
 	stack->pop = pop;
-	stack->count = count;
-	stack->displayStack = displayStack;
+	stack->getSize = count;
+	stack->display = displayStack;
 
 	return stack;
 }
@@ -32,16 +32,16 @@ void push(Stack stack, void * data) {
 void * pop(Stack stack) {
 	LinkedList l = GET_LIST(stack);
 
-	if (stack->count(stack) == 0)
+	if (stack->getSize(stack) == 0)
 		return NULL;
 
 	return l->deleteItem(l, 0);
 }
 
-void displayStack (Stack stack, void (*displayData)(const void *)) {
+void displayStack (Stack stack) {
 	LinkedList l = GET_LIST(stack);
 
-	l->display(l, displayData);
+	l->display(l);
 }
 
 void deleteStack(Stack stack) {
