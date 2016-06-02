@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/LinkedList.h"
-#include "../include/LinkedList_Private.h"
+#include "../include/private/LinkedList_P.h"
 
 void freeList(LinkedList list) {
 	Node * head = (Node *) getHead(list);

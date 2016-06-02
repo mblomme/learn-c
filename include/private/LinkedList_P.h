@@ -1,6 +1,6 @@
 #ifndef  LINKEDLIST_PRV_H_
 	#define LINKEDLIST_PRV_H_
-	#include "LinkedList.h"
+	#include "../LinkedList.h"
 
 	typedef struct _internals {
 		struct _node  * head;
