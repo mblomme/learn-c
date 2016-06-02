@@ -1,0 +1,49 @@
+[OPTIONS]
+Compatibility=1.1
+Full-text search=Yes
+Contents file=index.hhc
+Default Window=main
+Default topic=index.html
+Index file=index.hhk
+Language=0x409 English (United States)
+Title=Data Structures
+
+[WINDOWS]
+main="Data Structures","index.hhc","index.hhk","index.html","index.html",,,,,0x23520,,0x10387e,,,,,,,,0
+
+[FILES]
+_linked_list_8h_source.html
+_stack_8h_source.html
+_linked_list_8h.html
+_stack_8h.html
+bug.html
+struct__linked_list.html
+struct__stack.html
+dir_7ac42fa37be39d17caf436a7006f6def.html
+dir_897cdf892b1648e5a4c59b3f9a4ccbe0.html
+dir_39f28d515c03724b0428e2f0786ed8b6.html
+dir_d522931ffa1371640980b621734a4381.html
+dir_d6f3e40d6367db816e987784ef91fc52.html
+index.html
+pages.html
+annotated.html
+classes.html
+functions.html
+functions_vars.html
+files.html
+globals.html
+globals_func.html
+globals_type.html
+tab_a.png
+tab_b.png
+tab_h.png
+tab_s.png
+nav_h.png
+nav_f.png
+bc_s.png
+doxygen.png
+closed.png
+open.png
+bdwn.png
+sync_on.png
+sync_off.png
