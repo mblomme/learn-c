@@ -54,9 +54,7 @@ Person * newPerson(char * firstName, char * lastName) {
 int main() {
 
 	Person * p1 = newPerson("Matthias", "Blomme");
-
 	Person * p2 = newPerson("Hannelore", "Verhamme");
-
 	Person * p3 = newPerson("Reinout", "Verhamme");
 
 	Stack s = newStack(deletePerson, displayPerson);
